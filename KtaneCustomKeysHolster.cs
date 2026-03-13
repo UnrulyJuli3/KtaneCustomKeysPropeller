@@ -6,9 +6,9 @@ namespace KtaneCustomKeys
 {
     public static class KtaneCustomKeysHolster
     {
-        private static readonly Dictionary<string, Hold> s_storage = new Dictionary<string, Hold>();
+        private static readonly Dictionary<string, Hold> s_storage = [];
 
-        private static readonly Random s_random = new Random();
+        private static readonly Random s_random = new();
 
         private static readonly char[] s_tokenChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890".ToCharArray();
 
@@ -16,11 +16,11 @@ namespace KtaneCustomKeys
         {
             lock (s_storage)
             {
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < 5; i++)
+                var builder = new StringBuilder();
+                for (var i = 0; i < 5; i++)
                     builder.Append(s_random.Next(10));
 
-                string code = builder.ToString();
+                var code = builder.ToString();
                 if (s_storage.ContainsKey(code))
                     return CreateCode();
 
@@ -32,8 +32,8 @@ namespace KtaneCustomKeys
         {
             lock (s_storage)
             {
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < 15; i++)
+                var builder = new StringBuilder();
+                for (var i = 0; i < 15; i++)
                     builder.Append(s_tokenChars[s_random.Next(s_tokenChars.Length)]);
 
                 return builder.ToString();
@@ -44,7 +44,7 @@ namespace KtaneCustomKeys
         {
             lock (s_storage)
             {
-                Hold hold = new Hold(data);
+                var hold = new Hold(data);
                 s_storage.Add(hold.Code, hold);
                 return $"{hold.Code}|{hold.Token}";
             }
@@ -69,20 +69,11 @@ namespace KtaneCustomKeys
             }
         }
 
-        private class Hold
+        private class Hold(string data)
         {
-            public string Code { get; }
-
-            public string Data { get; }
-
-            public string Token { get; }
-
-            public Hold(string data)
-            {
-                Code = CreateCode();
-                Data = data;
-                Token = CreateToken();
-            }
+            public string Code { get; } = CreateCode();
+            public string Data { get; } = data;
+            public string Token { get; } = CreateToken();
         }
     }
 }
