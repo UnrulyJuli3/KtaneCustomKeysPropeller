@@ -11,8 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RT.Servers" Version="1.1.520" />
-    <PackageReference Include="RT.Util.Core" Version="2.0.1822" />
     <PackageReference Include="PropellerApi" Version="2.2.0" />
   </ItemGroup>
 
